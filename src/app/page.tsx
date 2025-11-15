@@ -1,3 +1,5 @@
+'use client';
+
 const contactDetails = [
   {
     label: "Business Name",
@@ -12,6 +14,42 @@ const contactDetails = [
     value: "1.708.567.0963",
   },
 ];
+
+const contactInfo = {
+  firstName: "Anthony",
+  lastName: "Ladas",
+  businessName: "Everybody Join My Band",
+  phone: "1.708.567.0963",
+};
+
+const createVCardContent = () => {
+  const sanitizedPhone = contactInfo.phone.replace(/[^\d+]/g, "");
+  const fullName = `${contactInfo.firstName} ${contactInfo.lastName}`;
+  return [
+    "BEGIN:VCARD",
+    "VERSION:3.0",
+    `FN:${fullName}`,
+    `N:${contactInfo.lastName};${contactInfo.firstName};;;`,
+    `ORG:${contactInfo.businessName}`,
+    `TEL;TYPE=CELL,VOICE:${sanitizedPhone}`,
+    "END:VCARD",
+  ].join("\n");
+};
+
+const handleSaveContact = () => {
+  const vCardContent = createVCardContent();
+  const blob = new Blob([vCardContent], {
+    type: "text/vcard;charset=utf-8",
+  });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = "anthony-ladas.vcf";
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  URL.revokeObjectURL(url);
+};
 
 export default function Home() {
   return (
@@ -59,7 +97,11 @@ export default function Home() {
                 1.708.567.0963
               </p>
             </div>
-            <button className="jiggle group flex flex-1 items-center justify-center gap-3 rounded-2xl border border-[#27ffe0]/70 bg-[#0f1e22] px-6 py-4 text-lg font-semibold text-[#27ffe0] shadow-[inset_0_1px_0_rgba(255,255,255,0.3),0_18px_40px_rgba(0,0,0,0.75)] transition hover:border-[#27ffe0] hover:bg-[#132b32] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#27ffe0]">
+            <button
+              type="button"
+              onClick={handleSaveContact}
+              className="jiggle group flex flex-1 items-center justify-center gap-3 rounded-2xl border border-[#27ffe0]/70 bg-[#0f1e22] px-6 py-4 text-lg font-semibold text-[#27ffe0] shadow-[inset_0_1px_0_rgba(255,255,255,0.3),0_18px_40px_rgba(0,0,0,0.75)] transition hover:border-[#27ffe0] hover:bg-[#132b32] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#27ffe0]"
+            >
               <svg
                 viewBox="0 0 24 24"
                 className="h-5 w-5 fill-current"
