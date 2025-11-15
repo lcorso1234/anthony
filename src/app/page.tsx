@@ -26,7 +26,7 @@ export default function Home() {
               Everybody Join My Band
             </h1>
             <p className="mt-2 text-sm text-zinc-400 sm:text-base">
-              Crafted with precision gunmetal tones and powered by{" "}
+             You are the most famous artist the world has yet to meet{" "}
               <span className="font-semibold text-[#27ffe0]">
                 Untapped Talent
               </span>
