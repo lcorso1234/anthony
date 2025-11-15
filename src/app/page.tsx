@@ -3,7 +3,7 @@
 const contactDetails = [
   {
     label: "Business Name",
-    value: "Everybody Join My Band",
+    value: "Atlas Stagg",
   },
   {
     label: "Contact",
@@ -18,7 +18,7 @@ const contactDetails = [
 const contactInfo = {
   firstName: "Anthony",
   lastName: "Ladas",
-  businessName: "Everybody Join My Band",
+  businessName: "Atlas Stagg",
   phone: "1.708.567.0963",
 };
 
@@ -63,12 +63,8 @@ export default function Home() {
             <h1 className="mt-3 text-3xl font-semibold text-white sm:text-4xl">
               Everybody Join My Band
             </h1>
-            <p className="mt-2 text-sm text-zinc-400 sm:text-base">
-             You are the most famous artist the world has yet to meet{" "}
-              <span className="font-semibold text-[#27ffe0]">
-                Untapped Talent
-              </span>
-              .
+            <p className="mt-2 text-sm font-semibold uppercase tracking-[0.35em] text-[#27ffe0] sm:text-base">
+              Play is not dead
             </p>
           </div>
 
@@ -115,7 +111,7 @@ export default function Home() {
 
           <p className="mt-6 text-center text-xs uppercase tracking-[0.5em] text-zinc-500">
             Powered by{" "}
-            <span className="text-[#27ffe0]">Untapped Talent</span>
+            <span className="text-[#27ffe0]">Atlas Stagg</span>
           </p>
         </div>
       </article>
