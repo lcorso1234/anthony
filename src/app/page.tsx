@@ -115,6 +115,9 @@ export default function Home() {
           </p>
         </div>
       </article>
+      <footer className="absolute bottom-6 left-0 right-0 text-center text-[10px] uppercase tracking-[0.4em] text-zinc-500">
+        Built in America, on Earth.
+      </footer>
     </main>
   );
 }
