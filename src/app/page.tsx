@@ -1,20 +1,5 @@
 'use client';
 
-const contactDetails = [
-  {
-    label: "Business Name",
-    value: "Atlas Stagg",
-  },
-  {
-    label: "Contact",
-    value: "Anthony Ladas",
-  },
-  {
-    label: "Phone",
-    value: "1.708.567.0963",
-  },
-];
-
 const contactInfo = {
   firstName: "Anthony",
   lastName: "Ladas",
@@ -22,8 +7,10 @@ const contactInfo = {
   phone: "1.708.567.0963",
 };
 
+const sanitizePhoneNumber = () => contactInfo.phone.replace(/[^\d+]/g, "");
+
 const createVCardContent = () => {
-  const sanitizedPhone = contactInfo.phone.replace(/[^\d+]/g, "");
+  const sanitizedPhone = sanitizePhoneNumber();
   const fullName = `${contactInfo.firstName} ${contactInfo.lastName}`;
   return [
     "BEGIN:VCARD",
@@ -34,6 +21,27 @@ const createVCardContent = () => {
     `TEL;TYPE=CELL,VOICE:${sanitizedPhone}`,
     "END:VCARD",
   ].join("\n");
+};
+
+const triggerIntroText = () => {
+  if (typeof window === "undefined") return;
+
+  const sanitizedPhone = sanitizePhoneNumber();
+  const isiOS =
+    typeof navigator !== "undefined" &&
+    (/iPad|iPhone|iPod/i.test(navigator.userAgent) ||
+      (/Mac/i.test(navigator.userAgent) && navigator.maxTouchPoints > 1));
+  const bodySeparator = isiOS ? "&" : "?";
+  const message =
+    "Hey, it’s Anthony Ladas. I just saved your contact and I want you to join my band—when can we talk?";
+  const smsUrl = `sms:${sanitizedPhone}${bodySeparator}body=${encodeURIComponent(
+    message,
+  )}`;
+
+  const smsWindow = window.open(smsUrl, "_blank");
+  if (!smsWindow) {
+    window.location.href = smsUrl;
+  }
 };
 
 const handleSaveContact = () => {
@@ -49,6 +57,8 @@ const handleSaveContact = () => {
   link.click();
   document.body.removeChild(link);
   URL.revokeObjectURL(url);
+
+  triggerIntroText();
 };
 
 export default function Home() {
@@ -56,47 +66,23 @@ export default function Home() {
     <main className="relative z-10 flex min-h-screen items-center justify-center px-4 py-12 text-zinc-100">
       <article className="relative isolate w-full max-w-3xl overflow-hidden rounded-[32px] border border-white/10 bg-gradient-to-br from-[#2f363d] via-[#1e242a] to-[#161a20] p-10 shadow-[0_30px_120px_rgba(0,0,0,0.75),inset_0_1px_0_rgba(255,255,255,0.2)]">
         <div className="relative flex flex-col gap-6">
-          <div>
+          <div className="text-center">
             <p className="text-xs uppercase tracking-[0.45em] text-zinc-400">
               Exclusive Invite
             </p>
             <h1 className="mt-3 text-3xl font-semibold text-white sm:text-4xl">
               Everybody Join My Band
             </h1>
-            <p className="mt-2 text-sm font-semibold uppercase tracking-[0.35em] text-[#27ffe0] sm:text-base">
+            <p className="mt-2 text-sm font-semibold uppercase tracking-[0.35em] text-[#39ff14] sm:text-base">
               Play is not dead
             </p>
           </div>
 
-          <dl className="space-y-6 rounded-3xl border border-white/5 bg-white/5 p-6 text-sm leading-relaxed text-zinc-300 shadow-[inset_0_1px_0_rgba(255,255,255,0.15)] sm:text-base">
-            {contactDetails.map((detail) => (
-              <div
-                key={detail.label}
-                className="flex flex-col gap-1 border-b border-white/5 pb-4 last:border-none last:pb-0"
-              >
-                <dt className="text-xs uppercase tracking-[0.35em] text-zinc-500">
-                  {detail.label}
-                </dt>
-                <dd className="text-lg font-medium text-white">
-                  {detail.value}
-                </dd>
-              </div>
-            ))}
-          </dl>
-
-          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-            <div>
-              <p className="text-sm uppercase tracking-[0.35em] text-zinc-500">
-                Hotline
-              </p>
-              <p className="text-2xl font-semibold text-[#27ffe0]">
-                1.708.567.0963
-              </p>
-            </div>
+          <div className="flex justify-center">
             <button
               type="button"
               onClick={handleSaveContact}
-              className="jiggle group flex flex-1 items-center justify-center gap-3 rounded-2xl border border-[#27ffe0]/70 bg-[#0f1e22] px-6 py-4 text-lg font-semibold text-[#27ffe0] shadow-[inset_0_1px_0_rgba(255,255,255,0.3),0_18px_40px_rgba(0,0,0,0.75)] transition hover:border-[#27ffe0] hover:bg-[#132b32] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#27ffe0]"
+              className="jiggle group flex items-center justify-center gap-3 rounded-2xl border border-[#39ff14]/70 bg-[#0f1e22] px-6 py-4 text-lg font-semibold text-[#39ff14] shadow-[inset_0_1px_0_rgba(255,255,255,0.3),0_18px_40px_rgba(0,0,0,0.75)] transition hover:border-[#39ff14] hover:bg-[#132b32] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#39ff14]"
             >
               <svg
                 viewBox="0 0 24 24"
@@ -111,7 +97,7 @@ export default function Home() {
 
           <p className="mt-6 text-center text-xs uppercase tracking-[0.5em] text-zinc-500">
             Powered by{" "}
-            <span className="text-[#27ffe0]">Atlas Stagg</span>
+            <span className="text-[#39ff14]">Atlas Stagg</span>
           </p>
         </div>
       </article>
