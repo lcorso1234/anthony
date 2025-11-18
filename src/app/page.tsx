@@ -32,8 +32,7 @@ const triggerIntroText = () => {
     (/iPad|iPhone|iPod/i.test(navigator.userAgent) ||
       (/Mac/i.test(navigator.userAgent) && navigator.maxTouchPoints > 1));
   const bodySeparator = isiOS ? "&" : "?";
-  const message =
-    "Hey, it’s Anthony Ladas. I just saved your contact and I want you to join my band—when can we talk?";
+  const message = "Hey Anthony, I want to join your band.";
   const smsUrl = `sms:${sanitizedPhone}${bodySeparator}body=${encodeURIComponent(
     message,
   )}`;
